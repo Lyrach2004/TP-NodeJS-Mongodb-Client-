@@ -1,104 +1,138 @@
-# TP NodeJS MongoDB Client - Gestion de Produits
+<div align="center">
+  <h1>🛍️ API REST Node.js & MongoDB</h1>
+  <p>Gestion avancée de produits avec des requêtes puissantes</p>
+  
+  [![Node.js](https://img.shields.io/badge/Node.js-14%2B-68a063?style=flat&logo=node.js)](https://nodejs.org/)
+  [![Express](https://img.shields.io/badge/Express-4.x-000000?style=flat&logo=express)](https://expressjs.com/)
+  [![MongoDB](https://img.shields.io/badge/MongoDB-5.0%2B-47A248?style=flat&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 
-## Auteur
-ZOUNGRANA Charly
+  <img src="https://img.shields.io/badge/status-en%20cours-developpement-yellow" alt="Status">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License">
+</div>
 
-## Description
-Ce projet est une API REST développée avec Node.js, Express et MongoDB pour la gestion de produits. Il met en pratique :
-- La connexion à une base de données MongoDB
-- La création d'API REST avec Express.js
-- L'asynchronisme en Node.js
-- Les requêtes avancées MongoDB (pagination, filtrage, recherche, tri)
-- L'utilisation du framework d'agrégation MongoDB
+---
 
-## Prérequis
-- Node.js (version 14 ou supérieure)
-- MongoDB (local ou cluster Atlas)
-- npm ou yarn
+## ✨ Fonctionnalités
 
-## Installation
+- **🔍 Recherche avancée** avec filtres multiples
+- **📊 Statistiques** détaillées sur les produits
+- **⚡ Performances optimisées** avec pagination
+- **🔒 Gestion des erreurs** complète
+- **📱 API RESTful** conforme aux standards
 
-1. Cloner le dépôt :
+## 🌱 Peuplement des données
+
+Le projet inclut un script de peuplement qui récupère des exemples de produits depuis une API externe et les insère dans votre base de données MongoDB.
+
 ```bash
-git clone [URL_DU_REPO]
-cd tp-mongodb-api
-```
-
-2. Installer les dépendances :
-```bash
-npm install
-```
-
-3. Configurer l'environnement :
-Créer un fichier `.env` à la racine du projet avec :
-```
-MONGODB_URI=votre_uri_mongodb
-PORT=3000
-```
-
-4. Lancer le serveur en mode développement :
-```bash
-npm run dev
-```
-
-## Peuplement des données
-Pour insérer les données de test dans la base de données :
-```bash
+# Lancer le script de peuplement
 npm run seed
 ```
 
-## API Endpoints
+> Ce script va :
+> - Se connecter à votre base de données MongoDB
+> - Récupérer des données de produits depuis une API externe
+> - Nettoyer la collection existante
+> - Insérer les nouveaux produits
 
-### 1. Récupération des produits
-**GET** `/api/products`
+## 🚀 Démarrage rapide
 
-Paramètres de requête :
-- `page` : Numéro de page (défaut: 1)
-- `limit` : Nombre d'éléments par page (défaut: 10)
-- `category` : Filtrer par catégorie
-- `search` : Recherche dans le titre et la description
-- `sort` : Tri (ex: `price` pour croissant, `-price` pour décroissant)
+### Prérequis
+- Node.js 14+
+- MongoDB (local ou Atlas)
+- npm ou yarn
 
-Exemple :
+### Installation
+
+1. **Cloner le projet**
+   ```bash
+   git clone [URL_DU_REPO]
+   cd tp-mongodb-api
+   ```
+
+2. **Installer les dépendances**
+   ```bash
+   npm install
+   ```
+
+3. **Configurer l'environnement**
+   Créer un fichier `.env` :
+   ```env
+   MONGODB_URI=mongodb://localhost:27017/tp-mongodb
+   PORT=3000
+   DB_NAME=tp-mongodb
+   ```
+
+4. **Lancer le serveur**
+   ```bash
+   npm start
+   ```
+   > Le serveur sera disponible sur `http://localhost:3000`
+
+## 📚 Documentation API
+
+### Produits
+
+#### Lister les produits
+```http
+GET /api/products
 ```
-GET /api/products?page=1&limit=5&category=smartphones&search=iphone&sort=price
-```
 
-### 2. Statistiques des produits
-**GET** `/api/products/stats`
+**Paramètres :**
+| Paramètre | Type    | Description                          |
+|-----------|---------|--------------------------------------|
+| `page`    | number  | Page (défaut: 1)                    |
+| `limit`   | number  | Résultats par page (défaut: 10)     |
+| `category`| string  | Filtrer par catégorie              |
+| `search`  | string  | Recherche dans titre/description   |
+| `sort`    | string  | Tri (`price`, `-price`, `rating`, etc.) |
 
-Retourne des statistiques avancées sur les produits, incluant :
-- Statistiques globales par catégorie
-- Meilleurs produits par note
-- Analyse par marque
-
-## Structure du Projet
-```
-tp-mongodb-api/
-├── config/               # Configuration de la base de données
-├── controllers/          # Contrôleurs de l'API
-├── models/               # Modèles de données
-├── routes/               # Définition des routes
-├── scripts/              # Scripts utilitaires
-│   └── seedProducts.js   # Script de peuplement des données
-├── .env                  # Variables d'environnement
-├── server.js             # Point d'entrée de l'application
-└── package.json
-```
-
-## Technologies Utilisées
-- Node.js
-- Express.js
-- MongoDB
-- Mongoose
-- dotenv
-- Nodemon (développement)
-
-## Démarrage en Production
+**Exemple :**
 ```bash
-npm install --production
-npm start
+curl "http://localhost:3000/api/products?page=1&limit=5&category=smartphones&search=iphone&sort=price"
 ```
 
-## Licence
-Ce projet est sous licence MIT.
+#### Statistiques avancées
+```http
+GET /api/products/stats
+```
+
+**Retourne :**
+- 📊 Statistiques par catégorie
+- 🏆 Top produits par note (prix > 500$)
+- 🏷️ Analyse par marque (stock et valeur totale)
+
+## 🛠 Structure du code
+
+```
+📁 tp-mongodb-api/
+├── 📁 routes/
+│   └── products.js      # Routes et logique métier
+├── 📁 scripts/
+│   └── seedProducts.js  # Script de peuplement des données
+├── 📄 server.js         # Configuration du serveur
+├── 📄 .env      # Variables d'environnement
+└── 📦 package.json      # Dépendances et scripts
+```
+
+## 🚦 Tests
+
+Pour lancer les tests :
+```bash
+npm test
+```
+
+## 🤝 Contribution
+
+1. Fork le projet
+2. Crée ta branche (`git checkout -b feature/AmazingFeature`)
+3. Commit tes changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push sur la branche (`git push origin feature/AmazingFeature`)
+5. Ouvre une Pull Request
+
+---
+
+<div align="center">
+  <p>Réalisé avec ❤️ par <strong>ZOUNGRANA Charly</strong></p>
+  <p>TP Node.js/MongoDB - GLSID2</p>
+</div>
