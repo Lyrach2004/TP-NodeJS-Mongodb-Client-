@@ -115,12 +115,6 @@ GET /api/products/stats
 └── 📦 package.json      # Dépendances et scripts
 ```
 
-## 🚦 Tests
-
-Pour lancer les tests :
-```bash
-npm test
-```
 
 ## 🤝 Contribution
 
